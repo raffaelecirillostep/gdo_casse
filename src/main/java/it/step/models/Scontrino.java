@@ -1,6 +1,7 @@
 package it.step.models;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -9,13 +10,14 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 public class Scontrino {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long scontrinoID;
+    private Integer scontrinoID;
 
     private Date data;
     private Double totale;

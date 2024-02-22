@@ -1,6 +1,8 @@
 package it.step.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -8,6 +10,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -15,7 +18,7 @@ public class Articolo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long articoloID;
+    private Integer articoloID;
 
     private String nome;
     private Double grammatura;
@@ -23,6 +26,7 @@ public class Articolo {
 
     @ManyToOne
     @JoinColumn(name = "repartoID")
+    @JsonIgnore
     private Reparto reparto;
 
     @OneToMany(mappedBy = "articolo")
@@ -34,6 +38,7 @@ public class Articolo {
     @OneToMany(mappedBy = "articolo")
     private List<Stock> stocks;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "articolo")
     private List<VoceScontrino> vociScontrino;
 }
