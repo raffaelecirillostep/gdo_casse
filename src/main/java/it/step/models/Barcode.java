@@ -14,18 +14,25 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Table(name = "Barcodes")
 public class Barcode {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "BarcodeID")
     private Integer barcodeID;
 
+    @Column(name = "Codice")
     private String codice;
+
+    @Column(name = "datainiziovalidità")
     private Date DataI;
+
+    @Column(name = "datafinevalidità")
     private Date DataF;
 
     @ManyToOne
-    @JoinColumn(name = "articoloID")
+    @JoinColumn(name = "ArticoloID")
     @JsonIgnore
     private Articolo articolo;
 }

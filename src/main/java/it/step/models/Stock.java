@@ -13,16 +13,19 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Table(name = "Stocks")
 public class Stock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "StockID")
     private Integer stockID;
 
+    @Column(name = "Quantità")
     private Integer quantita;
 
-    @ManyToOne
-    @JoinColumn(name = "articoloID")
     @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "ArticoloID")
     private Articolo articolo;
 }

@@ -13,12 +13,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Table(name = "Reparti")
 public class Reparto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "RepartoID")
     private Integer repartoID;
 
+    @Column(name = "Nome")
     private String nome;
 
     @OneToMany(mappedBy = "reparto")

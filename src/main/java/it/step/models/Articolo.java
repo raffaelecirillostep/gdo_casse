@@ -14,31 +14,35 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Table(name = "Articoli")
 public class Articolo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ArticoloID")
     private Integer articoloID;
 
+    @Column(name = "Nome")
     private String nome;
+
+    @Column(name = "Grammatura")
     private Double grammatura;
+
+    @Column(name = "unitàmisura")
     private String unitaM;
 
     @ManyToOne
-    @JoinColumn(name = "repartoID")
+    @JoinColumn(name = "RepartoID")
     @JsonIgnore
     private Reparto reparto;
 
     @OneToMany(mappedBy = "articolo")
     private List<Barcode> barcodes;
 
-    @OneToMany(mappedBy = "articolo")
-    private List<Prezzo> prezzi;
+    @ManyToOne
+    @JoinColumn(name = "PrezzoID")
+    private Prezzo prezzo;
 
-    @OneToMany(mappedBy = "articolo")
-    private List<Stock> stocks;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "articolo")
-    private List<VoceScontrino> vociScontrino;
+    @OneToOne(mappedBy = "articolo")
+    private Stock stock;
 }

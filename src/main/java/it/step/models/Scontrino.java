@@ -14,14 +14,24 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Table(name = "Scontrini")
 public class Scontrino {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ScontrinoID")
     private Integer scontrinoID;
 
+    @Column(name = "Data")
     private Date data;
+
+    @Column(name = "Totale")
     private Double totale;
 
-    @OneToMany(mappedBy = "scontrino")
+    @OneToMany
+    @JoinColumn(name = "ScontrinoID", referencedColumnName = "scontrinoID")
     private List<VoceScontrino> vociScontrino;
+
+    public Scontrino(Date data) {
+        this.data = data;
+    }
 }

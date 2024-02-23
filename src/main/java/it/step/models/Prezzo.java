@@ -14,18 +14,21 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Table(name = "Prezzi")
 public class Prezzo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PrezzoID")
     private Integer prezzoID;
 
+    @Column(name = "Valore")
     private Double valore;
-    private Date dataI;
-    private Date dataF;
 
-    @ManyToOne
-    @JoinColumn(name = "articoloID")
+    @Column(name = "isofferta")
+    private Boolean isOfferta;
+
     @JsonIgnore
+    @OneToOne(mappedBy = "prezzo")
     private Articolo articolo;
 }
