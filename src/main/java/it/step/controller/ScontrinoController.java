@@ -37,7 +37,7 @@ public class ScontrinoController {
     @PostMapping(value = "create")
     public ResponseEntity<Scontrino> createScontrino() {
         try {
-            Scontrino scontrino = scontrinoService.createScontrino(new Scontrino(new Date()));
+            Scontrino scontrino = scontrinoService.createScontrino(new Scontrino(new Date(), 0.0));
             return new ResponseEntity<>(scontrino, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -60,6 +60,12 @@ public class ScontrinoController {
                 tmp.setTotale(tmp.getPrezzoUnitario() * tmp.getQuantita());
             }
             VoceScontrino voce = voceScontrinoService.saveVoceScontrino(voceScontrino);
+            Optional<Scontrino> s = scontrinoService.getScontrinoByID(voceScontrino.getScontrinoID());
+            if(s.isPresent()){
+                Scontrino sc = s.get();
+                sc.setTotale(sc.getTotale() + voce.getTotale());
+                scontrinoService.createScontrino(sc);
+            }
             return new ResponseEntity<>(voce, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

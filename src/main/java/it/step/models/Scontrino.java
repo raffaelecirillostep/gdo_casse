@@ -31,7 +31,8 @@ public class Scontrino {
     @JoinColumn(name = "ScontrinoID", referencedColumnName = "scontrinoID")
     private List<VoceScontrino> vociScontrino;
 
-    public Scontrino(Date data) {
+    public Scontrino(Date data, Double totale) {
         this.data = data;
+        this.totale = totale;
     }
 }
