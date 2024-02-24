@@ -2,6 +2,7 @@ package it.step.controller;
 
 import it.step.models.*;
 import it.step.service.ArticoloService;
+import it.step.service.RepartoService;
 import it.step.service.ScontrinoService;
 import it.step.service.VoceScontrinoService;
 import lombok.RequiredArgsConstructor;
@@ -25,17 +26,18 @@ public class IncassoController {
     private final ScontrinoService scontrinoService;
     private final ArticoloService articoloService;
     private final VoceScontrinoService voceScontrinoService;
+    private final RepartoService repartoService;
 
     @GetMapping("date/{data}")
-    public ResponseEntity<Incasso> getIncassoByData(@PathVariable("data") @DateTimeFormat(pattern="yyyy-MM-dd") Date data) {
+    public ResponseEntity<Incasso> getIncassoByData(@PathVariable("data") @DateTimeFormat(pattern = "yyyy-MM-dd") Date data) {
         try {
-           List<Scontrino> scontrini = scontrinoService.getScontriniByData(data);
-           Incasso incasso = new Incasso(data, 0.0);
+            List<Scontrino> scontrini = scontrinoService.getScontriniByData(data);
+            Incasso incasso = new Incasso(data, 0.0);
 
-           for(Scontrino scontrino : scontrini){
-               incasso.setIncasso(incasso.getIncasso() + scontrino.getTotale());
-           }
-           return new ResponseEntity<>(incasso, HttpStatus.OK);
+            for (Scontrino scontrino : scontrini) {
+                incasso.setIncasso(incasso.getIncasso() + scontrino.getTotale());
+            }
+            return new ResponseEntity<>(incasso, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -48,10 +50,10 @@ public class IncassoController {
             List<VoceScontrino> vociScontrinoList = voceScontrinoService.getVociScontrinoByData(data);
             List<IncassoArticolo> incassoArticoli = new ArrayList<>();
 
-            for(Articolo articolo : articoliList){
+            for (Articolo articolo : articoliList) {
                 IncassoArticolo incassoArticolo = new IncassoArticolo(articolo.getArticoloID(), 0, 0.0);
-                for(VoceScontrino voceScontrino : vociScontrinoList){
-                    if( articolo.getArticoloID().equals(voceScontrino.getArticoloID()) ){
+                for (VoceScontrino voceScontrino : vociScontrinoList) {
+                    if (articolo.getArticoloID().equals(voceScontrino.getArticoloID())) {
                         incassoArticolo.setPzVenduti(
                                 incassoArticolo.getPzVenduti() + voceScontrino.getQuantita()
                         );
@@ -64,6 +66,38 @@ public class IncassoController {
             }
 
             return new ResponseEntity<>(incassoArticoli, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("reparto/date/{data}")
+    public ResponseEntity<List<IncassoReparto>> getIncassoRepartoByData(@PathVariable("data") @DateTimeFormat(pattern = "yyyy-MM-dd") Date data) {
+        try {
+            List<Articolo> articoliList = articoloService.getAllArticoli();
+            List<VoceScontrino> vociScontrinoList = voceScontrinoService.getVociScontrinoByData(data);
+            List<Reparto> repartiList = repartoService.getAllReparti();
+            List<IncassoReparto> incassoReparti = new ArrayList<>();
+
+            for (Articolo articolo : articoliList) {
+                for (Reparto reparto : repartiList) {
+                    if(articolo.getRepartoID().equals(reparto.getRepartoID())){
+                        IncassoReparto incassoReparto = new IncassoReparto(reparto.getRepartoID(), 0.0);
+                        for (VoceScontrino voceScontrino : vociScontrinoList) {
+                            if (articolo.getArticoloID().equals(voceScontrino.getArticoloID())) {
+                                incassoReparto.setIncasso(
+                                        incassoReparto.getIncasso() + voceScontrino.getTotale()
+                                );
+                            }
+                        }
+                        incassoReparti.add(incassoReparto);
+                    }
+                }
+
+            }
+
+            return new ResponseEntity<>(incassoReparti, HttpStatus.OK);
 
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
