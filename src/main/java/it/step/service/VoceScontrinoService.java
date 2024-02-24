@@ -9,4 +9,5 @@ public interface VoceScontrinoService {
 
     VoceScontrino saveVoceScontrino(VoceScontrino voceScontrino);
     List<VoceScontrino> getVociScontrinoByData(Date data);
+    List<VoceScontrino> getVociScontrinoByAnno(int anno);
 }

@@ -26,4 +26,9 @@ public class VoceScontrinoServiceImpl implements VoceScontrinoService {
     public List<VoceScontrino> getVociScontrinoByData(Date data) {
         return repo.findByDataScontrino(data);
     }
+
+    @Override
+    public List<VoceScontrino> getVociScontrinoByAnno(int anno) {
+        return repo.findByAnnoScontrino(anno);
+    }
 }

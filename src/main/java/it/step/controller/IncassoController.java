@@ -50,9 +50,9 @@ public class IncassoController {
             List<VoceScontrino> vociScontrinoList = voceScontrinoService.getVociScontrinoByData(data);
             List<IncassoArticolo> incassoArticoli = new ArrayList<>();
 
-            for (Articolo articolo : articoliList) {
+            articoliList.forEach(articolo -> {
                 IncassoArticolo incassoArticolo = new IncassoArticolo(articolo.getArticoloID(), 0, 0.0);
-                for (VoceScontrino voceScontrino : vociScontrinoList) {
+                vociScontrinoList.forEach(voceScontrino -> {
                     if (articolo.getArticoloID().equals(voceScontrino.getArticoloID())) {
                         incassoArticolo.setPzVenduti(
                                 incassoArticolo.getPzVenduti() + voceScontrino.getQuantita()
@@ -61,9 +61,9 @@ public class IncassoController {
                                 incassoArticolo.getIncasso() + voceScontrino.getTotale()
                         );
                     }
-                }
+                });
                 incassoArticoli.add(incassoArticolo);
-            }
+            });
 
             return new ResponseEntity<>(incassoArticoli, HttpStatus.OK);
 
@@ -71,6 +71,7 @@ public class IncassoController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @GetMapping("reparto/date/{data}")
     public ResponseEntity<List<IncassoReparto>> getIncassoRepartoByData(@PathVariable("data") @DateTimeFormat(pattern = "yyyy-MM-dd") Date data) {
@@ -80,22 +81,22 @@ public class IncassoController {
             List<Reparto> repartiList = repartoService.getAllReparti();
             List<IncassoReparto> incassoReparti = new ArrayList<>();
 
-            for (Articolo articolo : articoliList) {
-                for (Reparto reparto : repartiList) {
-                    if(articolo.getRepartoID().equals(reparto.getRepartoID())){
-                        IncassoReparto incassoReparto = new IncassoReparto(reparto.getRepartoID(), 0.0);
-                        for (VoceScontrino voceScontrino : vociScontrinoList) {
-                            if (articolo.getArticoloID().equals(voceScontrino.getArticoloID())) {
-                                incassoReparto.setIncasso(
-                                        incassoReparto.getIncasso() + voceScontrino.getTotale()
-                                );
-                            }
-                        }
-                        incassoReparti.add(incassoReparto);
-                    }
-                }
-
-            }
+            articoliList.forEach(articolo -> {
+                repartiList.stream()
+                        .filter(reparto -> articolo.getRepartoID().equals(reparto.getRepartoID()))
+                        .findFirst()
+                        .ifPresent(reparto -> {
+                            IncassoReparto incassoReparto = new IncassoReparto(reparto.getRepartoID(), 0.0);
+                            vociScontrinoList.forEach(voceScontrino -> {
+                                if (articolo.getArticoloID().equals(voceScontrino.getArticoloID())) {
+                                    incassoReparto.setIncasso(
+                                            incassoReparto.getIncasso() + voceScontrino.getTotale()
+                                    );
+                                }
+                            });
+                            incassoReparti.add(incassoReparto);
+                        });
+            });
 
             return new ResponseEntity<>(incassoReparti, HttpStatus.OK);
 
@@ -103,4 +104,38 @@ public class IncassoController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @GetMapping("reparto/year/{year}")
+    public ResponseEntity<List<IncassoReparto>> getIncassoRepartoByAnno(@PathVariable("year") int year) {
+        try {
+            List<Articolo> articoliList = articoloService.getAllArticoli();
+            List<VoceScontrino> vociScontrinoList = voceScontrinoService.getVociScontrinoByAnno(year);
+            List<Reparto> repartiList = repartoService.getAllReparti();
+            List<IncassoReparto> incassoReparti = new ArrayList<>();
+
+            articoliList.forEach(articolo -> {
+                repartiList.stream()
+                        .filter(reparto -> articolo.getRepartoID().equals(reparto.getRepartoID()))
+                        .findFirst()
+                        .ifPresent(reparto -> {
+                            IncassoReparto incassoReparto = new IncassoReparto(reparto.getRepartoID(), 0.0);
+                            vociScontrinoList.forEach(voceScontrino -> {
+                                if (articolo.getArticoloID().equals(voceScontrino.getArticoloID())) {
+                                    incassoReparto.setIncasso(
+                                            incassoReparto.getIncasso() + voceScontrino.getTotale()
+                                    );
+                                }
+                            });
+                            incassoReparti.add(incassoReparto);
+                        });
+            });
+
+            return new ResponseEntity<>(incassoReparti, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
