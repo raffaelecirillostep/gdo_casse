@@ -1,0 +1,339 @@
+{
+	"info": {
+		"_postman_id": "d4598686-2e99-43df-8d2b-e7f68f1f83ee",
+		"name": "Quesito ATS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30913723"
+	},
+	"item": [
+		{
+			"name": "Scontrino",
+			"item": [
+				{
+					"name": "Scontrino By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}scontrino/get/:id",
+							"host": [
+								"{{baseUrl}}scontrino"
+							],
+							"path": [
+								"get",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Scontrino",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}scontrino/create",
+							"host": [
+								"{{baseUrl}}scontrino"
+							],
+							"path": [
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Voce Scontrino",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"scontrinoID\": 1,\r\n    \"articoloID\": 1,\r\n    \"prezzoUnitario\": 3,\r\n    \"quantita\": 5, //Optional default= 1\r\n    \"totale\": 15 //Optional default= prezzoUnitario * quantita\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}scontrino/create/voce",
+							"host": [
+								"{{baseUrl}}scontrino"
+							],
+							"path": [
+								"create",
+								"voce"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Scontrino By ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}scontrino/delete/:id",
+							"host": [
+								"{{baseUrl}}scontrino"
+							],
+							"path": [
+								"delete",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Articolo",
+			"item": [
+				{
+					"name": "Articolo By ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"scontrinoID\": 3,\r\n    \"articoloID\": 2,\r\n    \"quantita\": 3,\r\n    \"prezzoUnitario\": 5,\r\n    \"totale\": 15\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}articolo/get/:articoloID",
+							"host": [
+								"{{baseUrl}}articolo"
+							],
+							"path": [
+								"get",
+								":articoloID"
+							],
+							"variable": [
+								{
+									"key": "articoloID",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Articolo By Barcode",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}articolo/barcode/:code",
+							"host": [
+								"{{baseUrl}}articolo"
+							],
+							"path": [
+								"barcode",
+								":code"
+							],
+							"variable": [
+								{
+									"key": "code",
+									"value": "123456789"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Incasso",
+			"item": [
+				{
+					"name": "Incasso By Data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}incasso/date/:data",
+							"host": [
+								"{{baseUrl}}incasso"
+							],
+							"path": [
+								"date",
+								":data"
+							],
+							"variable": [
+								{
+									"key": "data",
+									"value": "2024-02-23"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incasso Articoli By Data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}incasso/articoli/date/:data",
+							"host": [
+								"{{baseUrl}}incasso"
+							],
+							"path": [
+								"articoli",
+								"date",
+								":data"
+							],
+							"variable": [
+								{
+									"key": "data",
+									"value": "2024-02-23"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incasso Reparti By Data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}incasso/reparto/date/:data",
+							"host": [
+								"{{baseUrl}}incasso"
+							],
+							"path": [
+								"reparto",
+								"date",
+								":data"
+							],
+							"variable": [
+								{
+									"key": "data",
+									"value": "2024-02-23"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incasso Reparti By Anno",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}incasso/reparto/year/:anno",
+							"host": [
+								"{{baseUrl}}incasso"
+							],
+							"path": [
+								"reparto",
+								"year",
+								":anno"
+							],
+							"variable": [
+								{
+									"key": "anno",
+									"value": "2024"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stock",
+			"item": [
+				{
+					"name": "Stock Articolo By Data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}stock/get/articolo/:articoloID/date/:data",
+							"host": [
+								"{{baseUrl}}stock"
+							],
+							"path": [
+								"get",
+								"articolo",
+								":articoloID",
+								"date",
+								":data"
+							],
+							"variable": [
+								{
+									"key": "articoloID",
+									"value": "1"
+								},
+								{
+									"key": "data",
+									"value": "2024-02-23"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080/quesitoATS/",
+			"type": "string"
+		}
+	]
+}

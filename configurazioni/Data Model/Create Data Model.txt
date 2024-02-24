@@ -1,0 +1,64 @@
+
+-- Creazione Tabelle Database (Nome DB = QuesitoAtsDB)
+
+-- 1 Creazione della tabella Reparti
+CREATE TABLE Reparti (
+    RepartoID SERIAL PRIMARY KEY,
+    Nome VARCHAR(255)
+);
+
+-- 2 Creazione della tabella Prezzi
+CREATE TABLE Prezzi (
+    PrezzoID SERIAL PRIMARY KEY,
+    Valore DECIMAL(10, 2),
+    IsOfferta BOOLEAN
+);
+
+-- 3 Creazione della tabella Articoli
+CREATE TABLE Articoli (
+    ArticoloID SERIAL PRIMARY KEY,
+    PrezzoID INT,
+    Nome VARCHAR(255),
+    Grammatura INT,
+    UnitàMisura VARCHAR(10),
+    RepartoID INT,
+    FOREIGN KEY (PrezzoID) REFERENCES Prezzi(PrezzoID),
+    FOREIGN KEY (RepartoID) REFERENCES Reparti(RepartoID)
+);
+
+-- 4 Creazione della tabella Barcodes
+CREATE TABLE Barcodes (
+    BarcodeID SERIAL PRIMARY KEY,
+    Codice VARCHAR(255),
+    DataInizioValidità DATE,
+    DataFineValidità DATE,
+    ArticoloID INT,
+    FOREIGN KEY (ArticoloID) REFERENCES Articoli(ArticoloID)
+);
+
+-- 5 Creazione della tabella Stocks
+CREATE TABLE Stocks (
+    StockID SERIAL PRIMARY KEY,
+    Quantità INT,
+    ArticoloID INT,
+    FOREIGN KEY (ArticoloID) REFERENCES Articoli(ArticoloID)
+);
+
+-- 6 Creazione della tabella Scontrini
+CREATE TABLE Scontrini (
+    ScontrinoID SERIAL PRIMARY KEY,
+    Data DATE,
+    Totale DECIMAL(10, 2)
+);
+
+-- 7 Creazione della tabella VociScontrino
+CREATE TABLE VociScontrino (
+    VoceScontrinoID SERIAL PRIMARY KEY,
+    Quantità INT,
+    PrezzoUnitario DECIMAL(10, 2),
+    Totale DECIMAL(10, 2),
+    ScontrinoID INT,
+    ArticoloID INT,
+    FOREIGN KEY (ScontrinoID) REFERENCES Scontrini(ScontrinoID),
+    FOREIGN KEY (ArticoloID) REFERENCES Articoli(ArticoloID)
+);
