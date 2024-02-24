@@ -11,4 +11,7 @@ import java.util.List;
 public interface VoceScontrinoRepo extends JpaRepository<VoceScontrino, Integer> {
     @Query("SELECT v FROM VoceScontrino v WHERE v.scontrinoID IN (SELECT s.id FROM Scontrino s WHERE s.data = :dataScontrino)")
     List<VoceScontrino> findByDataScontrino(@Param("dataScontrino") Date dataScontrino);
+
+    @Query("SELECT v FROM VoceScontrino v WHERE v.scontrinoID IN (SELECT s.id FROM Scontrino s WHERE extract(year FROM s.data)= :annoScontrino)")
+    List<VoceScontrino> findByAnnoScontrino(@Param("annoScontrino") int annoScontrino);
 }

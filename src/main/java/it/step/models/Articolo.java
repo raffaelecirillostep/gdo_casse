@@ -31,10 +31,12 @@ public class Articolo {
     @Column(name = "unitàmisura")
     private String unitaM;
 
-    @ManyToOne
-    @JoinColumn(name = "RepartoID")
-    @JsonIgnore
-    private Reparto reparto;
+//    @ManyToOne
+//    @JoinColumn(name = "RepartoID")
+//    @JsonIgnore
+//    private Reparto reparto;
+    @Column(name = "repartoID")
+    private Integer repartoID;
 
     @OneToMany(mappedBy = "articolo")
     private List<Barcode> barcodes;

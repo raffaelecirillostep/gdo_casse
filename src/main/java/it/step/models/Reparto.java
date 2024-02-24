@@ -24,6 +24,10 @@ public class Reparto {
     @Column(name = "Nome")
     private String nome;
 
-    @OneToMany(mappedBy = "reparto")
+//    @OneToMany(mappedBy = "reparto")
+//    private List<Articolo> articoli;
+
+    @OneToMany
+    @JoinColumn(name = "RepartoID", referencedColumnName = "repartoID")
     private List<Articolo> articoli;
 }
