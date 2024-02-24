@@ -32,4 +32,11 @@ public class ScontrinoServiceImpl implements ScontrinoService {
     public List<Scontrino> getScontriniByData(Date data) {
         return repo.findByData(data);
     }
+
+    @Override
+    public Optional<Scontrino> deleteScontrinoByID(Integer id) {
+        Optional<Scontrino> scontrino = repo.findById(id);
+        repo.deleteById(id);
+        return scontrino;
+    }
 }

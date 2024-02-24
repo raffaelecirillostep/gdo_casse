@@ -43,6 +43,19 @@ public class ScontrinoController {
         }
     }
 
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<Scontrino> deleteScontrinoById(@PathVariable("id") Integer id) {
+        try {
+            Optional<Scontrino> scontrino = scontrinoService.deleteScontrinoByID(id);
+            if (scontrino.isPresent()) {
+                return new ResponseEntity<>(scontrino.get(), HttpStatus.OK);
+            }
+            throw new RuntimeException();
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping(value = "create/voce")
     public ResponseEntity<VoceScontrino> createVoceScontrino(@RequestBody VoceScontrino voceScontrino) {
         try {

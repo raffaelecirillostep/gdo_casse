@@ -27,7 +27,7 @@ public class Scontrino {
     @Column(name = "Totale")
     private Double totale;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "ScontrinoID", referencedColumnName = "scontrinoID")
     private List<VoceScontrino> vociScontrino;
 

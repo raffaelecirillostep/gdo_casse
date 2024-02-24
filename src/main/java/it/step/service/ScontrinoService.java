@@ -13,4 +13,6 @@ public interface ScontrinoService {
     Optional<Scontrino> getScontrinoByID(Integer id);
 
     List<Scontrino> getScontriniByData(Date data);
+
+    Optional<Scontrino> deleteScontrinoByID(Integer id);
 }
