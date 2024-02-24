@@ -2,7 +2,6 @@ package it.step.controller;
 
 import it.step.models.Scontrino;
 import it.step.models.VoceScontrino;
-import it.step.service.ArticoloService;
 import it.step.service.ScontrinoService;
 import it.step.service.VoceScontrinoService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,7 @@ public class ScontrinoController {
     private final VoceScontrinoService voceScontrinoService;
 
     @GetMapping("get/{id}")
-    public ResponseEntity<Scontrino> getArticoloById(@PathVariable("id") Integer id) {
+    public ResponseEntity<Scontrino> getScontrinoById(@PathVariable("id") Integer id) {
         try {
             Optional<Scontrino> scontrino = scontrinoService.getScontrinoByID(id);
             if (scontrino.isPresent()) {
@@ -54,14 +53,14 @@ public class ScontrinoController {
 
             //Se il totale non viene fornito lo calcolo.
             if (tmp.getTotale() == null) {
-                if (tmp.getQuantita() == null){
+                if (tmp.getQuantita() == null) {
                     tmp.setQuantita(1);
                 }
                 tmp.setTotale(tmp.getPrezzoUnitario() * tmp.getQuantita());
             }
             VoceScontrino voce = voceScontrinoService.saveVoceScontrino(voceScontrino);
             Optional<Scontrino> s = scontrinoService.getScontrinoByID(voceScontrino.getScontrinoID());
-            if(s.isPresent()){
+            if (s.isPresent()) {
                 Scontrino sc = s.get();
                 sc.setTotale(sc.getTotale() + voce.getTotale());
                 scontrinoService.createScontrino(sc);

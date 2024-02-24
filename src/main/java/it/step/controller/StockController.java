@@ -1,10 +1,7 @@
 package it.step.controller;
 
-import it.step.models.Incasso;
-import it.step.models.Scontrino;
 import it.step.models.Stock;
 import it.step.models.VoceScontrino;
-import it.step.service.ScontrinoService;
 import it.step.service.StockService;
 import it.step.service.VoceScontrinoService;
 import lombok.RequiredArgsConstructor;
@@ -28,16 +25,16 @@ public class StockController {
     private final StockService stockService;
     private final VoceScontrinoService voceScontrinoService;
 
-    @GetMapping("get/articolo={articoloID}&date={data}")
+    @GetMapping("get/articolo/{articoloID}/date/{data}")
     public ResponseEntity<Stock> getStockArticoloByData(@PathVariable("articoloID") Integer articoloID, @PathVariable("data") @DateTimeFormat(pattern = "yyyy-MM-dd") Date data) {
         try {
             List<VoceScontrino> vociScontrini = voceScontrinoService.getVociScontrinoByData(data);
             Optional<Stock> optionalStock = stockService.getStockByArticoloID(articoloID);
             Stock stock = new Stock();
-            if(optionalStock.isPresent()){
+            if (optionalStock.isPresent()) {
                 stock = optionalStock.get();
-                for(VoceScontrino voce : vociScontrini){
-                    if(voce.getArticoloID().equals(stock.getArticoloID())){
+                for (VoceScontrino voce : vociScontrini) {
+                    if (voce.getArticoloID().equals(stock.getArticoloID())) {
                         stock.setQuantita(stock.getQuantita() - voce.getQuantita());
                     }
                 }

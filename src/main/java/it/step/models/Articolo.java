@@ -1,6 +1,5 @@
 package it.step.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,10 +39,4 @@ public class Articolo {
     @ManyToOne
     @JoinColumn(name = "PrezzoID")
     private Prezzo prezzo;
-
-//    @Column(name = "StockID")
-//    private Integer stockID;
-
-//    @OneToOne(mappedBy = "articolo")
-//    private Stock stock;
 }

@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/incasso")
@@ -74,7 +74,7 @@ public class IncassoController {
 
 
     @GetMapping("reparto/date/{data}")
-    public ResponseEntity<List<IncassoReparto>> getIncassoRepartoByData(@PathVariable("data") @DateTimeFormat(pattern = "yyyy-MM-dd") Date data) {
+    public ResponseEntity<List<IncassoReparto>> getIncassoRepartiByData(@PathVariable("data") @DateTimeFormat(pattern = "yyyy-MM-dd") Date data) {
         try {
             List<Articolo> articoliList = articoloService.getAllArticoli();
             List<VoceScontrino> vociScontrinoList = voceScontrinoService.getVociScontrinoByData(data);
@@ -107,7 +107,7 @@ public class IncassoController {
 
 
     @GetMapping("reparto/year/{year}")
-    public ResponseEntity<List<IncassoReparto>> getIncassoRepartoByAnno(@PathVariable("year") int year) {
+    public ResponseEntity<List<IncassoReparto>> getIncassoRepartiByAnno(@PathVariable("year") int year) {
         try {
             List<Articolo> articoliList = articoloService.getAllArticoli();
             List<VoceScontrino> vociScontrinoList = voceScontrinoService.getVociScontrinoByAnno(year);

@@ -8,7 +8,9 @@ import java.util.Optional;
 public interface ArticoloService {
 
     Optional<Articolo> getArticoloByID(Integer id);
+
     Optional<Articolo> getArticoloByBarcode(String barcode);
+
     List<Articolo> getAllArticoli();
 
 }
