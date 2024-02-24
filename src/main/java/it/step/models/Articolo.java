@@ -31,10 +31,6 @@ public class Articolo {
     @Column(name = "unitàmisura")
     private String unitaM;
 
-//    @ManyToOne
-//    @JoinColumn(name = "RepartoID")
-//    @JsonIgnore
-//    private Reparto reparto;
     @Column(name = "repartoID")
     private Integer repartoID;
 
@@ -45,6 +41,9 @@ public class Articolo {
     @JoinColumn(name = "PrezzoID")
     private Prezzo prezzo;
 
-    @OneToOne(mappedBy = "articolo")
-    private Stock stock;
+//    @Column(name = "StockID")
+//    private Integer stockID;
+
+//    @OneToOne(mappedBy = "articolo")
+//    private Stock stock;
 }

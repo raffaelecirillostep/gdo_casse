@@ -24,8 +24,13 @@ public class Stock {
     @Column(name = "Quantità")
     private Integer quantita;
 
-    @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "ArticoloID")
-    private Articolo articolo;
+    @Column(name = "ArticoloID")
+    private Integer articoloID;
+
+    public Stock(Integer articoloID, Integer quantita) {
+        this.articoloID = articoloID;
+        this.quantita = quantita;
+    }
+
 }
+
